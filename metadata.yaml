@@ -1,0 +1,22 @@
+name: voice_downloader
+display_name: VoiceDownloader
+author: maomaosamaqwq
+version: "1.0.0"
+repo: https://github.com/maomaosamaqwq/VoiceDownloader
+short_desc: 自动下载远程语音消息到本地，解决跨机语音路径无效问题
+desc: |
+  解决 AstrBot 与 QQ 客户端不在同一台机器上时，语音消息的本地文件路径无效的问题。
+  
+  工作流程：
+  - 监听所有消息，检测到 Record（语音）类型时触发
+  - 从消息 data 中提取 path（本地路径）、url（远程下载地址）和 file（文件名）
+  - 检查 path 指向的文件是否真实存在
+  - 如果存在 → 不做处理
+  - 如果不存在 → 使用 url 通过 HTTP 异步下载语音文件到临时目录
+  - 下载成功后修改消息 data 中的 path 字段为实际保存路径
+  - 可选：amr → wav 转码（需安装 ffmpeg），该功能为可配置开关
+  - 支持定时清理过期文件
+  - 下载失败时记录警告日志但不影响流程
+support_platforms:
+  - aiocqhttp
+astrbot_version: ">=3.0"
